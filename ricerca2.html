@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ricerca - Radici Paceco</title>
+
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/pages/ricerca.css">
+
+</head>
+<body>
+
+<!-- shared navbar -->
+<div id="navbar-placeholder"></div>
+
+<script>
+/* load navbar (components/navbar.html) */
+fetch("components/navbar.html")
+  .then(r => r.text())
+  .then(html => { document.getElementById("navbar-placeholder").innerHTML = html })
+  .catch(()=>{/* ignore if missing during local testing */})
+</script>
+
+<p1>Area di ricerca in arrivo a breve</p1>

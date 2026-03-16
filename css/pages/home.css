@@ -1,0 +1,96 @@
+.hero{
+text-align:center;
+padding:80px 20px;
+}
+
+.hero h1{
+font-size:48px;
+margin-bottom:15px;
+}
+
+.hero-sub{
+max-width:650px;
+margin:auto;
+font-size:18px;
+color:#6e6e73;
+margin-bottom:30px;
+}
+
+.hero-button{
+background:#0071e3;
+color:white;
+padding:12px 20px;
+border-radius:12px;
+}
+
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:30px;
+margin-top:40px;
+margin-bottom:60px;
+text-align:center;
+}
+
+.stat h2{
+font-size:36px;
+}
+
+
+.project{
+max-width:700px;
+margin:auto;
+margin-bottom:80px;
+}
+
+
+.search-preview{
+text-align:center;
+margin-bottom:80px;
+}
+
+.search-box{
+display:flex;
+justify-content:center;
+gap:10px;
+margin-top:20px;
+}
+
+.search-box input{
+padding:12px;
+border-radius:10px;
+border:1px solid #d2d2d7;
+}
+
+
+.dataset-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+margin-top:30px;
+}
+
+.dataset-card{
+background:white;
+border-radius:20px;
+padding:25px;
+border:1px solid #e5e5e7;
+}
+
+
+.cta{
+text-align:center;
+padding:70px 20px;
+background:#f5f5f7;
+margin-top:80px;
+}
+
+.cta-button{
+display:inline-block;
+margin-top:20px;
+background:#0071e3;
+color:white;
+padding:12px 22px;
+border-radius:12px;
+}

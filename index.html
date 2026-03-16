@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Home - Radici Paceco</title>
+
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/pages/home.css">
+
+</head>
+
+
+<body>
+<!-- NAVBAR -->
+<div id="navbar-placeholder"></div>
+
+<script>
+fetch("components/navbar.html")
+.then(res => res.text())
+.then(data => {
+document.getElementById("navbar-placeholder").innerHTML = data;
+});
+</script>
+
+<!-- HERO -->
+<section class="hero container">
+
+<h1>Le radici di Paceco</h1>
+
+<p class="hero-sub">
+Un archivio digitale dedicato ai matrimoni di Paceco dal 1615 al 1833.  
+Oltre due secoli di storia familiare raccolti consultabili.
+</p>
+
+<a class="hero-button" href="ricerca2.html">Avvia una ricerca</a>
+
+</section>
+
+
+
+<!-- STATISTICS -->
+<section class="stats container">
+    <div class="stat">
+    <h2>4199</h2>
+    <p>Matrimoni registrati</p>
+    </div>
+
+    <div class="stat">
+    <h2>25.194</h2>
+    <p>Nomi indicizzati</p>
+    </div>
+
+    <div class="stat">
+    <h2>218</h2>
+    <p>Anni di registrazioni</p>
+    </div>
+
+    <div class="stat">
+    <h2>1615</h2>
+    <p>Anno più antico</p>
+    </div>
+</section>
+
+<!-- PROJECT -->
+<section class="project container">
+    <div class="project-text">
+        <h2>Il progetto</h2>
+
+        <p>
+        Radici Paceco è un progetto indipendente dedicato alla raccolta e alla
+        digitalizzazione dei registri matrimoniali della comunità di Paceco.
+        Attraverso un lavoro di indicizzazione manuale è stato possibile
+        ricostruire oltre due secoli di legami familiari.
+        </p>
+
+        <p>
+        L'obiettivo è rendere questi dati facilmente consultabili per studiosi,
+        discendenti e appassionati di storia locale.
+        </p>
+    </div>
+</section>
+
+
+
+<!-- SEARCH PREVIEW -->
+<section class="search-preview container">
+    <h2>Cerca tra migliaia di matrimoni</h2>
+
+    <div class="search-box">
+        <input placeholder="Cognome o nome">
+
+        <button>
+        Ricerca
+        </button>
+    </div>
+
+    <p class="search-note">
+        La consultazione completa richiede una chiave di accesso.
+    </p>
+</section>
+
+<!-- DATASET SECTION -->
+<section class="dataset container">
+    <h2>Un patrimonio genealogico unico</h2>
+    <div class="dataset-grid">
+        <div class="dataset-card">
+            <h3>Registri storici</h3>
+            <p>
+            Trascrizione sistematica dei registri matrimoniali parrocchiali.
+            </p>
+        </div>
+
+        <div class="dataset-card">
+            <h3>Indicizzazione completa</h3>
+            <p>
+            Tutti i nomi dei coniugi e dei genitori sono stati indicizzati.
+            </p>
+        </div>
+
+        <div class="dataset-card">
+            <h3>Ricerca rapida</h3>
+            <p>Trova immediatamente famiglie e collegamenti genealogici.</p>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- CTA -->
+<section class="cta">
+    <h2>Accedi all'archivio completo</h2>
+
+    <p>
+    Ottieni una chiave virtuale per consultare tutti i matrimoni indicizzati.
+    </p>
+
+    <a class="cta-button" href="acquista.html">
+    Ottieni accesso
+</a>
+
+</section>
+
+
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+<p>
+Radici Paceco · Archivio genealogico indipendente
+</p>
+
+</footer>
+
+
+</body>
+
+</html>

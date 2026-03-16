@@ -1,0 +1,40 @@
+.navbar{
+position:sticky;
+top:0;
+background:rgba(245,245,247,0.8);
+backdrop-filter:blur(12px);
+border-bottom:1px solid #e5e5e7;
+z-index:1000;
+}
+
+.nav-inner{
+max-width:1100px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:14px 20px;
+}
+
+.nav-center{
+display:flex;
+gap:25px;
+}
+
+.nav-center a{
+color:#1d1d1f;
+font-size:14px;
+}
+
+.nav-logo{
+font-weight:600;
+font-size:16px;
+}
+
+.nav-button{
+background:#0071e3;
+color:white;
+padding:8px 14px;
+border-radius:10px;
+font-size:14px;
+}

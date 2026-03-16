@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ricerca - Radici Paceco</title>
+
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/pages/ricerca.css">
+
+</head>
+  <body>
+  <!-- shared navbar -->
+  <div id="navbar-placeholder"></div>
+
+  <script>
+  /* load navbar (components/navbar.html) */
+  fetch("components/navbar.html")
+    .then(r => r.text())
+    .then(html => { document.getElementById("navbar-placeholder").innerHTML = html })
+    .catch(()=>{/* ignore if missing during local testing */})
+  </script>
+
+  <!-- HERO -->
+  <section class="search-hero container">
+    <h1>Ricerca nei registri matrimoniali</h1>
+    <p>Filtra i matrimoni registrati a Paceco tra il 1615 e il 1833.</p>
+  </section>
+
+    <!-- FORM -->
+  <form id="searchForm" class="search-container container" autocomplete="off">
+
+    <!-- MATRIMONIO -->
+    <details class="search-section" open>
+      <summary>Matrimonio</summary>
+      <div class="section-content grid-3">
+        <label>Data esatta<input type="date" name="Data"></label>
+        <label>Da<input type="date" name="Data_da"></label>
+        <label>A<input type="date" name="Data_a"></label>
+        <label>Prete
+          <select name="Prete">
+            <option value=""></option>
+          </select>
+        </label>
+      </div>
+    </details>
+
+    <!-- SPOSO -->
+    <details class="search-section" open>
+      <summary>Sposo</summary>
+      <div class="section-content grid-3">
+        <label>Titolo
+          <select name="Titolo Sposo">
+            <option value=""></option>
+            <option>Don</option>
+            <option>Magister</option>
+            <option>Dottore</option>
+          </select>
+        </label>
+
+        <label> Sposo primo nome/i
+          <input type="text" name="Sposo primo nome/i" placeholder="es. Giuseppe">
+        </label>
+
+        <label> Sposo cognome
+          <input type="text" name="Sposo cognome" placeholder="es. Taranto">
+        </label>
+
+        <label class="checkbox"><input type="checkbox" name="Vedovo di" value="Si"> Vedovo (flag)</label>
+        <!-- text field to search Vedovo di content if needed -->
+        <label> Vedovo di (nome)
+          <input type="text" name="Vedovo di_text" placeholder="nome della precedente moglie">
+        </label>
+      </div>
+    </details>
+
+    <!-- GENITORI SPOSO -->
+    <details class="search-section">
+      <summary>Genitori dello sposo</summary>
+      <div class="section-content grid-3">
+        <label>Titolo Padre Sposo
+          <select name="Titolo Padre Sposo">
+            <option value=""></option>
+            <option>Don</option>
+            <option>Magister</option>
+            <option>Dottore</option>
+          </select>
+        </label>
+
+        <label>Padre Sposo primo nome/i
+          <input type="text" name="Padre Sposo primo nome/i">
+        </label>
+
+        <label class="checkbox"><input type="checkbox" name="Morto Padre Sposo" value="Si"> Morto Padre Sposo</label>
+
+        <label>Madre Sposo primo nome/i
+          <input type="text" name="Madre Sposo primo nome/i">
+        </label>
+
+        <label>Cognome Madre Sposo
+          <input type="text" name="Cognome Madre Sposo">
+        </label>
+
+        <label class="checkbox"><input type="checkbox" name="Morta Madre Sposo" value="Si"> Morta Madre Sposo</label>
+
+        <label>Luogo di Matrimonio Genitori Sposo
+          <select name="Luogo di Matrimonio Genitori Sposo">
+            <option value=""></option>
+            <option>Paceco</option>
+            <option>Trapani</option>
+            <option>Marsala</option>
+          </select>
+        </label>
+      </div>
+    </details>
+
+      <!-- SPOSA -->
+      <details class="search-section" open>
+        <summary>Sposa</summary>
+        <div class="section-content grid-3">
+          <label>Titolo Sposa
+            <select name="Titolo Sposa">
+              <option value=""></option>
+              <option>Donna</option>
+            </select>
+          </label>
+
+          <label>Sposa primo nome/i
+            <input type="text" name="Sposa primo nome/i">
+          </label>
+
+          <label>Sposa cognome
+            <input type="text" name="Sposa cognome">
+          </label>
+
+          <label class="checkbox"><input type="checkbox" name="Vedova di" value="Si"> Vedova (flag)</label>
+          <label> Vedova di (nome)
+            <input type="text" name="Vedova di_text">
+          </label>
+        </div>
+      </details>
+
+      <!-- GENITORI SPOSA -->
+      <details class="search-section">
+        <summary>Genitori della sposa</summary>
+        <div class="section-content grid-3">
+          <label>Titolo Padre Sposa
+            <select name="Titolo Padre Sposa">
+              <option value=""></option>
+              <option>Don</option>
+              <option>Magister</option>
+              <option>Dottore</option>
+            </select>
+          </label>
+
+          <label>Padre Sposa primo nome/i
+            <input type="text" name="Padre Sposa primo nome/i">
+          </label>
+
+          <label class="checkbox"><input type="checkbox" name="Morto Padre Sposa" value="Si"> Morto Padre Sposa</label>
+
+          <label>Madre Sposa primo nome/i
+            <input type="text" name="Madre Sposa primo nome/i">
+          </label>
+
+          <label>Cognome Madre Sposa
+            <input type="text" name="Cognome Madre Sposa">
+          </label>
+
+          <label class="checkbox"><input type="checkbox" name="Morta Madre Sposa" value="Si"> Morta Madre Sposa</label>
+
+          <label>Luogo di Matrimonio Genitori Sposa
+            <select name="Luogo di Matrimonio Genitori Sposa">
+              <option value=""></option>
+              <option>Paceco</option>
+              <option>Trapani</option>
+              <option>Marsala</option>
+            </select>
+          </label>
+        </div>
+      </details>
+
+      <!-- ARCHIVIO -->
+    <details class="search-section">
+        <summary>Riferimento archivio</summary>
+        <div class="section-content grid-3">
+          <label>Registro URL
+            <input type="text" name="Registro URL">
+          </label>
+          <label>Pagina/e
+            <input type="text" name="Pagina/e">
+          </label>
+          <label>Foglio Nº
+            <input type="text" name="Foglio Nº">
+          </label>
+          <label>Indice URL
+            <input type="text" name="Indice URL">
+          </label>
+          <label class="checkbox"><input type="checkbox" name="Commenti" value="Si"> Solo record con commenti</label>
+        </div>
+      </details>
+
+      <div class="search-actions">
+        <button type="submit" class="search-button">Avvia ricerca</button>
+        <button type="reset" class="reset-button">Cancella filtri</button>
+      </div>
+    </form>
+
+    <!-- RESULTS -->
+    <div id="results-count">0 risultati</div>
+    <div id="results-container"></div>
+
+    <!-- scripts -->
+    <script src="js/search.js"></script>
+  </body>
+</html>

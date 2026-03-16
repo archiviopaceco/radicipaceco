@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Progresso - Radici Paceco</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <!-- Title and buttons -->
+            <div id="navbar"></div>
+            <script>
+            fetch('components/navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar').innerHTML = data;
+            });
+            </script>
+
+        <iframe src="https://archiviopaceco.github.io/progressoarchiviopaceco/" style="width:100%; height:1000px; border:none;"></iframe>
+        </div>
+    </div>
+</body>

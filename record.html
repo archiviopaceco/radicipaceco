@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radici Paceco – Record Matrimonio</title>
+<link rel="stylesheet" href="home.css">
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  padding: 2rem;
+  line-height: 1.6;
+  background-color: #fff;
+  color: #111;
+}
+
+.record-container {
+  max-width: 800px;
+  margin: auto;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 2rem;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.record-summary {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.person {
+  margin-bottom: 1rem;
+}
+
+.person span.label {
+  font-weight: bold;
+}
+
+.collapsible {
+  background-color: #eee;
+  color: #111;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.active, .collapsible:hover {
+  background-color: #ddd;
+}
+
+.content {
+  padding: 0 1rem;
+  display: none;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background-color: #fff;
+  border-left: 3px solid #007aff;
+  border-radius: 0 8px 8px 0;
+}
+.content a {
+  color: #007aff;
+  text-decoration: none;
+}
+.back-button {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #007aff;
+  color: #007aff;
+  text-decoration: none;
+  font-weight: bold;
+}
+.back-button:hover { background-color: #f0f8ff; }
+</style>
+</head>
+<body>
+
+<div class="record-container">
+  <h1>Dettagli Matrimonio</h1>
+  <div id="record-details">
+    <!-- Filled dynamically via JS -->
+  </div>
+
+  <button class="collapsible">Microfilm e URL</button>
+  <div class="content" id="record-extra">
+    <!-- Filled dynamically via JS -->
+  </div>
+
+  <a href="ricerca.html" class="back-button">← Torna alla ricerca</a>
+</div>
+
+<script src="record.js"></script>
+<script>
+(() => {
+  const CSV_PATH = "js/data/matrimoni.csv";
+
+  function parseCSV(text) {
+    const rows = [];
+    let row = [];
+    let cur = "";
+    let inQuotes = false;
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      const next = text[i + 1];
+      if (ch === '"') {
+        if (inQuotes && next === '"') { cur += '"'; i++; } 
+        else inQuotes = !inQuotes;
+        continue;
+      }
+      if (ch === ',' && !inQuotes) { row.push(cur); cur = ""; continue; }
+      if ((ch === '\n' || ch === '\r') && !inQuotes) {
+        if (cur || row.length) { row.push(cur); rows.push(row); row=[]; cur=""; }
+        if (ch === '\r' && next === '\n') i++;
+        continue;
+      }
+      cur += ch;
+    }
+    if (cur || row.length) row.push(cur), rows.push(row);
+    return rows.filter(r => r.some(c => c !== ""));
+  }
+
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  async function loadRecord(id) {
+    try {
+      const res = await fetch(CSV_PATH);
+      if (!res.ok) throw new Error("CSV load failed: " + res.status);
+      const text = await res.text();
+      const rows = parseCSV(text);
+      if (rows.length < 2) throw new Error("CSV vuoto o solo header");
+
+      const headers = rows[0].map(h => h.trim());
+      const dataset = rows.slice(1).map((r, idx) => {
+        const obj = {};
+        headers.forEach((h, i) => obj[h] = r[i] ? r[i].trim() : "");
+        obj._id = idx.toString();
+        return obj;
+      });
+
+      const record = dataset.find(r => r._id === id);
+      if (!record) {
+        document.getElementById("record-details").innerHTML = `<p>Nessun record trovato per ID ${id}</p>`;
+        return;
+      }
+
+      renderRecord(record);
+
+    } catch (err) {
+      document.getElementById("record-details").innerHTML = `<p>Errore caricamento record: ${err.message}</p>`;
+    }
+  }
+
+  function renderPerson(prefix, record) {
+    const primoNome = record[`${prefix} primo nome/i`] || "[nome sconosciuto]";
+    const cognome = record[`${prefix} cognome`] || "[cognome sconosciuto]";
+    const titolo = record[`Titolo ${prefix}`] || "";
+    const padreNome = record[`Padre ${prefix} primo nome/i`] || "[padre sconosciuto]";
+    const padreMorto = record[`Morto Padre ${prefix}`] ? "(allora morto)" : "(allora vivente)";
+    const madreNome = record[`Madre ${prefix} primo nome/i`] || "[madre sconosciuta]";
+    const madreMorta = record[`Morta Madre ${prefix}`] ? "(allora morta)" : "(allora vivente)";
+    const vedovo = record[`Vedovo/a di`]? `vedovo di ${record[`Vedovo/a di`]}` : "";
+
+    return `<div class="person">
+      <span class="label">${prefix}:</span> ${titolo} ${primoNome} ${cognome} ${vedovo}<br>
+      figlio/a di ${padreNome} ${padreMorto} e ${madreNome} ${madreMorta}
+    </div>`;
+  }
+
+  function renderRecord(record) {
+    const container = document.getElementById("record-details");
+    container.innerHTML = "";
+
+    const matrimonioData = record["Data"] || "[data sconosciuta]";
+    const matrimonioLuogo = record["Luogo di Matrimonio Genitori Sposo"] || "[luogo sconosciuto]";
+    const titoloSposo = record["Titolo Sposo"] || "";
+    const sposoNome = record["Sposo primo nome/i"] || "[nome sconosciuto]";
+    const sposoCognome = record["Sposo cognome"] || "[cognome sconosciuto]";
+
+    // Summary
+    const summary = document.createElement("div");
+    summary.className = "record-summary";
+    summary.innerHTML = `Matrimonio del ${matrimonioData} a ${matrimonioLuogo}, ${titoloSposo} ${sposoNome} ${sposoCognome}`;
+    container.appendChild(summary);
+
+    // Sposo
+    container.innerHTML += renderPerson("Sposo", record);
+
+    // Sposa
+    container.innerHTML += renderPerson("Sposa", record);
+
+    // Extra collapsible content
+    const extra = document.getElementById("record-extra");
+    extra.innerHTML = "";
+    const microfilm = record["Registro URL"] || record["Indice URL"] || "";
+    if (microfilm) {
+      const links = [];
+      if (record["Registro URL"]) links.push(`<a href="${record["Registro URL"]}" target="_blank">Registro</a>`);
+      if (record["Indice URL"]) links.push(`<a href="${record["Indice URL"]}" target="_blank">Indice</a>`);
+      extra.innerHTML = links.join(" | ");
+    }
+  }
+
+  const recordId = getQueryParam("id");
+  if (recordId !== null) {
+    loadRecord(recordId);
+  } else {
+    document.getElementById("record-details").innerHTML = "<p>ID record non specificato.</p>";
+  }
+
+  // Collapsible logic
+  document.addEventListener("DOMContentLoaded", () => {
+    const coll = document.getElementsByClassName("collapsible")[0];
+    coll.addEventListener("click", function() {
+      this.classList.toggle("active");
+      const content = this.nextElementSibling;
+      if (content.style.display === "block") content.style.display = "none";
+      else content.style.display = "block";
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
